@@ -4,17 +4,15 @@ import datetime
 import google.generativeai as genai
 
 from dotenv import load_dotenv
-load_dotenv()  # 👈 this loads variables from .env
+load_dotenv()  
 
-
-# 🔑 Set your Gemini API key (make sure GEMINI_API_KEY is in your environment variables)
 genai.configure(api_key=os.getenv("GEMINI_API_KEY"))
 
-# 📁 Ensure logs directory exists
-LOG_DIR = "conversion_logs"
+OUTPUT_DIR = os.path.join("converter", "converted", "views")
+LOG_DIR = os.path.join("converter", "conversion_logs")
+os.makedirs(OUTPUT_DIR, exist_ok=True)
 os.makedirs(LOG_DIR, exist_ok=True)
 
-# ✨ Prompt Template
 def make_prompt(source_code: str) -> str:
     return f"""
 Convert the following Django view function to an Express.js controller function using modern syntax:
@@ -27,7 +25,6 @@ Django View:
 Express.js Controller:
 """
 
-# 🚀 Gemini Flash Call
 def call_gemini_api(source_code: str) -> str:
     model = genai.GenerativeModel("models/gemini-1.5-flash")
     prompt = make_prompt(source_code)
@@ -37,7 +34,6 @@ def call_gemini_api(source_code: str) -> str:
     except Exception as e:
         return f"Error: {str(e)}"
 
-# 🧠 Convert All Views in a Batch
 def convert_all_views(view_list):
     """
     Input: List of dicts with 'name' and 'source_code'
@@ -55,9 +51,17 @@ def convert_all_views(view_list):
 
         result[name] = converted
 
+        # Write converted JS file
+        safe_name = name.replace(".py", "").replace("/", "_")
+        out_path = os.path.join(OUTPUT_DIR, f"{safe_name}.js")
+        with open(out_path, "w") as f:
+            f.write(converted)
+
+        # Append to log
         log_data.append({
             "name": name,
             "input": code,
+            "output_file": out_path,
             "output": converted
         })
 
