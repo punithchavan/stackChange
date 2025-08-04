@@ -4,7 +4,7 @@ from .ast_utils import parse_python_file, extract_functions
 from .group_templates import group_functions, build_template
 from .ast_utils import unparse_functions
 
-VIEWS_FILE_PATH = "backend/converter/views.py"
+VIEWS_FILE_PATH = "backend/sample_views.py"
 OUTPUT_DIR = "temp_controllers"
 JSON_OUTPUT_FILE = "controllers.json"
 
