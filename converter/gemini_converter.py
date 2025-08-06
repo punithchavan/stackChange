@@ -41,38 +41,45 @@ def call_gemini_api(source_code: str) -> str:
         return f"Error: {str(e)}"
 
 # 🧠 Convert Views in Grouped Controller Structure
-def convert_all_views(grouped_views: dict):
+def convert_all_views(nested_views_dict: dict):
     """
+    Accepts input from views_to_json.py and reformats it:
+
     Input: Dict like:
     {
-        "user_controller": [
-            {"name": "user_login", "source_code": "..."},
-            {"name": "user_register", "source_code": "..."},
-        ],
-        "tweet_controller": [
-            {"name": "tweet_create", "source_code": "..."},
-        ]
+        "user_controller": {
+            "get_user": "def get_user(...):",
+            "post_comment": "def post_comment(...):"
+        },
+        ...
     }
-    Output: Dict ready for group_templates.py
+
+    Converts to:
+    {
+        "user_controller": {
+            "get_user": "converted JS code",
+            ...
+        }
+    }
+
+    Then passes to generate_controller_templates.
     """
     result = {}
     timestamp = datetime.datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
     log_path = os.path.join(LOG_DIR, f"log_{timestamp}.json")
     log_data = []
 
-    for controller_name, view_list in grouped_views.items():
+    for controller_name, view_dict in nested_views_dict.items():
         result[controller_name] = {}
-        for view in view_list:
-            name = view.get("name", "unknown")
-            code = view.get("source_code", "")
-            converted = call_gemini_api(code)
+        for func_name, source_code in view_dict.items():
+            converted = call_gemini_api(source_code)
 
-            result[controller_name][name] = converted
+            result[controller_name][func_name] = converted
 
             log_data.append({
                 "controller": controller_name,
-                "name": name,
-                "input": code,
+                "name": func_name,
+                "input": source_code,
                 "output": converted
             })
 
@@ -80,7 +87,7 @@ def convert_all_views(grouped_views: dict):
     with open(log_path, "w") as log_file:
         json.dump(log_data, log_file, indent=2)
 
-    # ✅ Generate template controller files
+    # ✅ Generate controller templates
     generate_controller_templates(result)
 
     return result
