@@ -4,7 +4,9 @@ import datetime
 import google.generativeai as genai
 
 from dotenv import load_dotenv
-from group_templates import generate_controller_templates  # 👈 integrates templates
+from group_templates import build_template  # 🧠 old template generator
+from views_to_json import write_grouped_templates  # 🧠 for grouped views
+from ast_utils import unparse_functions, parse_python_file, extract_functions, group_functions  # 🧠 AST utilities
 
 load_dotenv()
 
@@ -41,53 +43,46 @@ def call_gemini_api(source_code: str) -> str:
         return f"Error: {str(e)}"
 
 # 🧠 Convert Views in Grouped Controller Structure
-def convert_all_views(nested_views_dict: dict):
+def convert_all_views(django_views_path):
     """
-    Accepts input from views_to_json.py and reformats it:
-
-    Input: Dict like:
-    {
-        "user_controller": {
-            "get_user": "def get_user(...):",
-            "post_comment": "def post_comment(...):"
-        },
-        ...
-    }
-
-    Converts to:
-    {
-        "user_controller": {
-            "get_user": "converted JS code",
-            ...
-        }
-    }
-
-    Then passes to generate_controller_templates.
+    Input: Path to views.py file
+    Output: Creates converted .controller.js files in OUTPUT_DIR
     """
+    # Get grouped views from AST
+    tree = parse_python_file(django_views_path)
+    func_nodes = extract_functions(tree)
+    grouped_views = group_functions(func_nodes)  # {group: [func1, func2, ...]}
+
     result = {}
     timestamp = datetime.datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
     log_path = os.path.join(LOG_DIR, f"log_{timestamp}.json")
     log_data = []
 
-    for controller_name, view_dict in nested_views_dict.items():
-        result[controller_name] = {}
-        for func_name, source_code in view_dict.items():
-            converted = call_gemini_api(source_code)
+    for group_name, func_nodes in grouped_views.items():
+        raw_code = unparse_functions(func_nodes)  # convert AST to raw Django code
+        template = build_template(group_name, raw_code)  # generate template string
+        converted = call_gemini_api(template)
 
-            result[controller_name][func_name] = converted
+        # Save final controller file
+        output_path = os.path.join(OUTPUT_DIR, f"{group_name}.controller.js")
+        with open(output_path, "w") as f:
+            f.write(converted)
 
-            log_data.append({
-                "controller": controller_name,
-                "name": func_name,
-                "input": source_code,
-                "output": converted
-            })
+        # For logs
+        result[group_name] = converted
+        log_data.append({
+            "controller": group_name,
+            "input_template": template,
+            "output": converted
+        })
 
     # Save logs
     with open(log_path, "w") as log_file:
         json.dump(log_data, log_file, indent=2)
 
-    # ✅ Generate controller templates
-    generate_controller_templates(result)
-
     return result
+
+# 🧪 Example usage
+if __name__ == "__main__":
+    path_to_views = "backend/sample_views.py"  # replace with actual path
+    convert_all_views(path_to_views)
