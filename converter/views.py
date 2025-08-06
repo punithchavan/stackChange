@@ -2,6 +2,7 @@ import os
 import uuid
 import zipfile
 import subprocess
+import sys
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework.parsers import MultiPartParser
@@ -9,6 +10,8 @@ from rest_framework import status
 from django.http import FileResponse
 from django.conf import settings
 from .models import ConversionJob
+from pathlib import Path
+
 
 UPLOAD_DIR = os.path.join(settings.MEDIA_ROOT, 'uploads')
 EXTRACT_DIR = os.path.join(settings.MEDIA_ROOT, 'extracted')
@@ -31,11 +34,11 @@ class UploadAndConvertView(APIView):
 
         # Create job record
         job = ConversionJob.objects.create(
-            _id=job_id,
+            id=job_id,
             uploaded_file=zip_path,
             status="processing"
         )
-
+        
         try:
             # Unzip
             extracted_path = os.path.join(EXTRACT_DIR, job_id)
@@ -43,7 +46,17 @@ class UploadAndConvertView(APIView):
             with zipfile.ZipFile(zip_path, 'r') as zip_ref:
                 zip_ref.extractall(extracted_path)
 
-            app_path = os.path.join(extracted_path, 'app')
+            # app_path = os.path.join(extracted_path, 'app')
+            def find_app_path(root_dir):
+                for dirpath, dirnames, filenames in os.walk(root_dir):
+                    if 'models.py' in filenames and 'views.py' in filenames and 'urls.py' in filenames:
+                        return dirpath
+                return None
+
+            app_path = find_app_path(extracted_path)
+            if not app_path:
+                raise FileNotFoundError("Could not find Django app with models.py, views.py, and urls.py")
+            print(extracted_path)
 
             models_path = os.path.join(app_path, 'models.py')
             views_path = os.path.join(app_path, 'views.py')
@@ -52,8 +65,10 @@ class UploadAndConvertView(APIView):
             os.makedirs(OUTPUT_DIR, exist_ok=True)
 
             # Run conversion scripts
+            #subprocess.run(['python', os.path.join(CONVERTER_DIR, 'model_converter.py'), models_path], check=True)
             subprocess.run(['python', os.path.join(CONVERTER_DIR, 'model_converter.py'), models_path], check=True)
-            subprocess.run(['python', os.path.join(CONVERTER_DIR, 'views_to_json.py'), views_path], check=True)
+            # subprocess.run(['python', os.path.join(CONVERTER_DIR, 'views_to_json.py'), views_path], check=True)
+            subprocess.run([sys.executable, '-m', 'converter.converters.views_to_json', views_path], check=True, text=True, cwd=Path(settings.BASE_DIR))
             # subprocess.run(['python', os.path.join(CONVERTER_DIR, 'urls_converter.py'), urls_path], check=True)
             subprocess.run(['python', os.path.join(CONVERTER_DIR, 'urls_converter.py'), urls_path, views_path], check=True)
 

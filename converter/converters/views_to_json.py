@@ -1,11 +1,15 @@
 import os
 import sys
+
+sys.path.append(os.path.dirname(os.path.abspath(__file__)))
+
 import json
 import subprocess
 
 from ast_utils import parse_python_file, extract_functions
 from group_templates import group_functions, build_template
 from ast_utils import unparse_functions
+
 
 # Default JSON output file
 JSON_OUTPUT_FILE = "controllers.json"
@@ -44,7 +48,7 @@ def main():
 
     # Run gemini_converter using the same Python interpreter
     subprocess.run(
-        [sys.executable, '-m', 'gemini_converter'],
+        [sys.executable, '-m', 'converter.converters.gemini_converter'],
         check=True,
         text=True
     )

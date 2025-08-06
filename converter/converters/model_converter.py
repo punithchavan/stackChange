@@ -235,6 +235,7 @@ import re
 import os
 import json
 import sys
+#from django.conf import settings
 
 def map_field_type(field_line):
     """Maps Django field types to Mongoose/MERN stack data types."""
@@ -440,6 +441,10 @@ if __name__ == "__main__":
         sys.exit(1)
 
     INPUT_FILE_PATH = sys.argv[1]
-    OUTPUT_DIRECTORY_PATH = "media/output_project/"
+    # OUTPUT_DIRECTORY_PATH = "media/output_project/"
+    OUTPUT_DIRECTORY_PATH = "C:/Users/punit/OneDrive/Documents/GitHub/stackChange/media/output_project"
+
+    #OUTPUT_DIRECTORY_PATH = os.path.join(settings.BASE_DIR, "media", "output_project")
+
 
     convert_django_models_to_mongoose(INPUT_FILE_PATH, OUTPUT_DIRECTORY_PATH)
