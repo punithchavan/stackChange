@@ -1,0 +1,12 @@
+[
+  {
+    "controller": "user_controller",
+    "input_template": "// user.controller.js - Template\n\n/*\nConverted from Django views\n*/\n\nconst user_controller = {\n    // def user_login(request):\n    //     return JsonResponse({'msg': 'Login Successful'})\n    // \n    // def user_register(request):\n    //     return JsonResponse({'msg': 'User Registered'})\n    // \n    // def user_logout(request):\n    //     return JsonResponse({'msg': 'Logged Out'})\n};\n\nmodule.exports = user_controller;\n",
+    "output": "const express = require('express');\nconst router = express.Router();\n\nrouter.post('/login', (req, res) => {\nres.json({ msg: 'Login Successful' });\n});\n\n\nrouter.post('/register', (req, res) => {\nres.json({ msg: 'User Registered' });\n});\n\n\nrouter.post('/logout', (req, res) => {\nres.json({ msg: 'Logged Out' });\n});\n\n\nmodule.exports = router;"
+  },
+  {
+    "controller": "tweet_controller",
+    "input_template": "// tweet.controller.js - Template\n\n/*\nConverted from Django views\n*/\n\nconst tweet_controller = {\n    // def tweet_create(request):\n    //     return JsonResponse({'msg': 'Tweet Created'})\n    // \n    // def tweet_delete(request):\n    //     return JsonResponse({'msg': 'Tweet Deleted'})\n};\n\nmodule.exports = tweet_controller;\n",
+    "output": "const express = require('express');\nconst router = express.Router();\n\nrouter.post('/tweets', (req, res) => {\nres.json({ msg: 'Tweet Created' });\n});\n\n\nrouter.delete('/tweet', (req, res) => {\nres.json({ msg: 'Tweet Deleted' });\n});\n\n\nmodule.exports = router;"
+  }
+]

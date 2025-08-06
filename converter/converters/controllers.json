@@ -1,0 +1,4 @@
+{
+  "user_controller": "// user.controller.js - Template\n\n/*\nConverted from Django views\n*/\n\nconst user_controller = {\n    // def user_login(request):\n    //     return JsonResponse({'msg': 'Login Successful'})\n    // \n    // def user_register(request):\n    //     return JsonResponse({'msg': 'User Registered'})\n    // \n    // def user_logout(request):\n    //     return JsonResponse({'msg': 'Logged Out'})\n};\n\nmodule.exports = user_controller;\n",
+  "tweet_controller": "// tweet.controller.js - Template\n\n/*\nConverted from Django views\n*/\n\nconst tweet_controller = {\n    // def tweet_create(request):\n    //     return JsonResponse({'msg': 'Tweet Created'})\n    // \n    // def tweet_delete(request):\n    //     return JsonResponse({'msg': 'Tweet Deleted'})\n};\n\nmodule.exports = tweet_controller;\n"
+}
