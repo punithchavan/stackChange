@@ -20,6 +20,7 @@ export default function StackChangeUploader() {
   const handleChange = (e) => {
     const selectedFile = e.target.files[0];
     if (selectedFile) {
+      console.log("📥 File selected from input:", selectedFile);
       setFile(selectedFile);
       setMessage('');
       setProgress(0);
