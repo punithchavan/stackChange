@@ -1,0 +1,3 @@
+{
+  "misc_controller": "// misc.controller.js - Template\n\n/*\nConverted from Django views\n*/\n\nconst misc_controller = {\n    // def userLogin(request):\n    //     return JsonResponse({'msg': 'Login Successful'})\n    // \n    // def userRegister(request):\n    //     return JsonResponse({'msg': 'User Registered'})\n};\n\nmodule.exports = misc_controller;\n"
+}

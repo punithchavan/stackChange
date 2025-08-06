@@ -1,6 +1,6 @@
 import os
 from collections import defaultdict
-from .ast_utils import unparse_functions
+from ast_utils import unparse_functions
 
 def get_group_name(func_name):
     return func_name.split('_')[0] if '_' in func_name else 'misc'
