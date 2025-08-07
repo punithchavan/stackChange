@@ -27,7 +27,12 @@ SECRET_KEY = 'django-insecure-2)t_zady4kh@_8x@t+0&t*m2gk6l48g17l0!dzhyztrg2h$g^k
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [
+    'localhost',
+    '127.0.0.1',
+    'stack-change.vercel.app',      # Your Vercel frontend
+    'stackchange.onrender.com',     # Your Render backend
+]
 
 
 # Application definition

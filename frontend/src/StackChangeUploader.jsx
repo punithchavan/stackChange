@@ -45,7 +45,7 @@ const handleUpload = async () => {
 
   try {
     const response = await axios.post(
-      'http://127.0.0.1:8000/upload/',
+      'https://stackchange.onrender.com/upload/',
       formData,
       {
         headers: { 'Content-Type': 'multipart/form-data' },
@@ -75,7 +75,7 @@ const handleUpload = async () => {
   const handleDownload = () => {
     if (!jobId) return;
     // Open download in a new tab/window
-    window.open(`http://127.0.0.1:8000/download/${jobId}/`, '_blank');
+    window.open(`https://stackchange.onrender.com/download/${jobId}/`, '_blank');
   };
 
 
