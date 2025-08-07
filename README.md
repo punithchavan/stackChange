@@ -84,6 +84,8 @@ Monolithic Architecture (stackChange)
 git clone https://github.com/punithchavan/stackChange.git
 cd stackChange
 
+---
+
 ## 🛠 Frontend Setup
 
 ```bash
