@@ -97,10 +97,15 @@ class UploadAndConvertView(APIView):
 class DownloadConvertedZip(APIView):
     def get(self, request, job_id):
         try:
-            job = ConversionJob.objects.get(_id=job_id)
+            job = ConversionJob.objects.get(id=job_id)
             if job.status != "completed" or not job.converted_file:
                 return Response({'error': 'Conversion not complete or failed'}, status=400)
 
-            return FileResponse(open(job.converted_file, 'rb'), as_attachment=True, filename='converted_project.zip')
+            # Get the absolute path to the converted file
+            file_path = job.converted_file.path if hasattr(job.converted_file, 'path') else os.path.join(settings.MEDIA_ROOT, str(job.converted_file))
+            if not os.path.exists(file_path):
+                return Response({'error': 'File not found'}, status=404)
+
+            return FileResponse(open(file_path, 'rb'), as_attachment=True, filename='converted_project.zip')
         except ConversionJob.DoesNotExist:
             return Response({'error': 'Job not found'}, status=404)

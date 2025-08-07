@@ -442,7 +442,7 @@ if __name__ == "__main__":
 
     INPUT_FILE_PATH = sys.argv[1]
     # OUTPUT_DIRECTORY_PATH = "media/output_project/"
-    OUTPUT_DIRECTORY_PATH = "C:/Users/punit/OneDrive/Documents/GitHub/stackChange/media/output_project"
+    OUTPUT_DIRECTORY_PATH = "media/output_project"
 
     #OUTPUT_DIRECTORY_PATH = os.path.join(settings.BASE_DIR, "media", "output_project")
 

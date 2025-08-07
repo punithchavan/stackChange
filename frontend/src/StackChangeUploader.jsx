@@ -1,9 +1,12 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import axios from 'axios';
 import bgVideo from './assets/bgVideo.mp4';
 export default function StackChangeUploader() {
   const [file, setFile] = useState(null);
   const [progress, setProgress] = useState(0);
   const [message, setMessage] = useState('');
+  const [jobId, setJobId] = useState(null); // <-- Add this line
+
 
   const handleDrop = (e) => {
     e.preventDefault();
@@ -27,25 +30,55 @@ export default function StackChangeUploader() {
     }
   };
 
-  const handleUpload = () => {
-    if (!file) {
-      setMessage('❌ Please select a file first.');
-      return;
-    }
+ 
+const handleUpload = async () => {
+  if (!file) {
+    setMessage('❌ Please select a file first.');
+    return;
+  }
 
-    setMessage('Uploading...');
-    setProgress(0);
+  setMessage('Uploading...');
+  setProgress(0);
 
-    let percent = 0;
-    const interval = setInterval(() => {
-      percent += 5;
-      setProgress(percent);
-      if (percent >= 100) {
-        clearInterval(interval);
-        setMessage(`✅ File "${file.name}" uploaded successfully!`);
+  const formData = new FormData();
+  formData.append('file', file);
+
+  try {
+    const response = await axios.post(
+      'http://127.0.0.1:8000/upload/',
+      formData,
+      {
+        headers: { 'Content-Type': 'multipart/form-data' },
+        onUploadProgress: (progressEvent) => {
+          const percentCompleted = Math.round(
+            (progressEvent.loaded * 100) / progressEvent.total
+          );
+          setProgress(percentCompleted);
+        },
       }
-    }, 150);
+    );
+    if (response.data.job_id) {
+      setMessage(`✅ Upload successful! Job ID: ${response.data.job_id}`);
+      setJobId(response.data.job_id); // <-- Save job ID for download
+    } else {
+      setMessage('✅ File uploaded, but no job ID returned.');
+      setJobId(null);
+    }
+  } catch (error) {
+    setMessage('❌ Upload failed.');
+    setProgress(0);
+    setJobId(null);
+  }
+};
+
+  // Download handler
+  const handleDownload = () => {
+    if (!jobId) return;
+    // Open download in a new tab/window
+    window.open(`http://127.0.0.1:8000/download/${jobId}/`, '_blank');
   };
+
+
 
   return (
     <div className="position-relative">
@@ -108,6 +141,16 @@ export default function StackChangeUploader() {
           <button className="btn btn-primary w-100" onClick={handleUpload}>
             Upload
           </button>
+
+          {/* Download Button */}
+          {jobId && (
+            <button
+              className="btn btn-success w-100 mt-3"
+              onClick={handleDownload}
+            >
+              Download Converted File
+            </button>
+          )}
 
           {/* Progress Bar */}
 {progress > 0 && (
