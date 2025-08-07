@@ -84,7 +84,7 @@ Monolithic Architecture (stackChange)
 git clone https://github.com/yourusername/stackChange.git
 cd stackChange
 
-### 🛠 Frontend Setup
+## 🛠 Frontend Setup
 
 ```bash
 cd frontend
@@ -107,6 +107,7 @@ python manage.py runserver
 ## 🚀 Deployment
 
 **Frontend (Vercel):** https://stack-change.vercel.app 
+
 **Backend (Django AI Service):** Hosted on Render  
 
 ---
