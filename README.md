@@ -11,7 +11,6 @@ stackChange is an AI-powered tool that automatically converts a Django backend p
 - [Architecture](#architecture)
 - [Features](#features)
 - [Local Setup Instructions](#local-setup-instructions)
-- [Folder Structure](#folder-structure)
 - [Deployment](#deployment)
 - [Contributors](#contributors)
 
@@ -55,7 +54,7 @@ The goal is to simplify the process of switching from Django to MERN stack (and 
 
 ---
 
-🏗️ Architecture
+### 🏗️ Architecture
 Monolithic Architecture (stackChange)
 
 <img width="365" height="423" alt="image" src="https://github.com/user-attachments/assets/e5939d25-2286-4f4c-ab9c-2d06d20fff12" />
@@ -85,7 +84,7 @@ Monolithic Architecture (stackChange)
 git clone https://github.com/yourusername/stackChange.git
 cd stackChange
 
-### 2. Frontend Setup
+### 2.Frontend Setup
 cd frontend
 npm install
 npm run dev
@@ -97,13 +96,13 @@ python manage.py runserver
 
 ---
 
-# Deployment
+### Deployment
 🔗 Frontend: https://stack-change.vercel.app/
 🌐 Backend (Django AI Service): Hosted on Render
 
 ---
 
-# 💡 Future Improvements
+### 💡 Future Improvements
 🔄 Add support for bidirectional conversion (MERN → Django)
 
 🧠 Fine-tuned prompt engineering for better accuracy
