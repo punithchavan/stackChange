@@ -81,7 +81,7 @@ Monolithic Architecture (stackChange)
 ### 1. Clone the Repository
 
 ```bash
-git clone https://github.com/yourusername/stackChange.git
+git clone https://github.com/punithchavan/stackChange.git
 cd stackChange
 
 ## 🛠 Frontend Setup
@@ -123,9 +123,9 @@ python manage.py runserver
 
 ## 👥 Contributors
 
-- [@punith123](https://github.com/punithchavan) – Backend & Converters
-- [@bharat456](https://github.com/BharatVarma007) – Backend & Converters
-- [@pranav789](https://github.com/ypranav17) – Backend & LLM API Handling
-- [@safdar321](https://github.com/safdar-hussain1) – Frontend Styling & Backend Database
-- [@harpith999](https://github.com/harpith) – Frontend, Backend API Routing & Deployment
+- [@punith](https://github.com/punithchavan) – Backend & Converters
+- [@bharat](https://github.com/BharatVarma007) – Backend & Converters
+- [@pranav](https://github.com/ypranav17) – Backend & LLM API Handling
+- [@safdar](https://github.com/safdar-hussain1) – Frontend Styling & Backend Database
+- [@harpith](https://github.com/harpith) – Frontend, Backend API Routing & Deployment
 
