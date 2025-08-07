@@ -118,3 +118,14 @@ python manage.py runserver
 🧠 Fine-tuned prompt engineering for better accuracy  
 🧪 Add unit testing and validation post-conversion  
 🧩 VS Code Extension for in-editor conversion  
+
+---
+
+## 👥 Contributors
+
+- [@punith123](https://github.com/punithchavan) – Backend & Converters
+- [@bharat456](https://github.com/BharatVarma007) – Backend & Converters
+- [@pranav789](https://github.com/ypranav17) – Backend & LLM API Handling
+- [@safdar321](https://github.com/safdar-hussain1) – Frontend Styling & Backend Database
+- [@harpith999](https://github.com/harpith) – Frontend, Backend API Routing & Deployment
+
