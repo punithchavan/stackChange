@@ -76,7 +76,7 @@ Monolithic Architecture (stackChange)
 
 ---
 
-## 🧪 Local Setup Instructions
+## 🛠️ Local Setup Instructions
 
 ### 1. Clone the Repository
 
@@ -84,32 +84,36 @@ Monolithic Architecture (stackChange)
 git clone https://github.com/yourusername/stackChange.git
 cd stackChange
 
-### 2.Frontend Setup
+### 2. Frontend Setup
+
+```bash
 cd frontend
 npm install
 npm run dev
 
-### 3. Backend Setup
+
+### 2. Backend Setup
+
+```bash
 pip install -r requirements.txt
 cd backend
-python manage.py runserver
+python manage.py runserver
+
+
+### 🚀 Deployment
+
+**Frontend (Vercel)**: [https://stack-change.vercel.app](https://stack-change.vercel.app)  
+**Backend (Django AI Service)**: Hosted on Render
 
 ---
 
-### Deployment
-🔗 Frontend: https://stack-change.vercel.app/
-🌐 Backend (Django AI Service): Hosted on Render
+### 🌟 Future Improvements
 
----
+✅ **Add support for bidirectional conversion** (MERN ⇄ Django)  
+🧠 **Fine-tuned prompt engineering** for better accuracy  
+🧪 **Add unit testing and validation** post-conversion  
+🧩 **VS Code Extension** for in-editor conversion
 
-### 💡 Future Improvements
-🔄 Add support for bidirectional conversion (MERN → Django)
-
-🧠 Fine-tuned prompt engineering for better accuracy
-
-🧪 Add unit testing and validation post-conversion
-
-📦 VS Code Extension for in-editor conversion
 
 
 
