@@ -125,9 +125,10 @@ python manage.py runserver
 
 ## 👥 Contributors
 
-- [@punith](https://github.com/punithchavan) – Backend & Converters
-- [@bharat](https://github.com/BharatVarma007) – Backend & Converters
-- [@pranav](https://github.com/ypranav17) – Backend & LLM API Handling
-- [@safdar](https://github.com/safdar-hussain1) – Frontend Styling & Backend Database
-- [@harpith](https://github.com/harpith) – Frontend, Backend API Routing & Deployment
+- [@punith](https://github.com/punithchavan) – Managed database operations, AST conversions,   configured urls.py routes, and handled project deployment.
+- [@bharat](https://github.com/BharatVarma007) – Handled router URL conversions, backend API integration, and is handling Django Rest Framework APIs.
+- [@pranav](https://github.com/ypranav17) – Handled intelligent logic pipelines using LLMs, including prompt engineering and function automation.
+- [@safdar](https://github.com/safdar-hussain1) – Worked on frontend components, model design, and model-to-code conversions.
+- [@harpith](https://github.com/harpith) – Built the frontend, is handling Django Rest Framework APIs, and collaborated on API integration.
+
 
